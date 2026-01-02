@@ -1,0 +1,22 @@
+/* ===== HOME PAGE - Minimal & Clean ===== */
+.home-page {
+  min-height: 100vh;
+  background-color: var(--bg-dark);
+}
+
+.home-content {
+  padding: 3rem 0 4rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .home-content {
+    padding: 2rem 0 3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-content {
+    padding: 1.5rem 0 2rem;
+  }
+}

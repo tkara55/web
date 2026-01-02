@@ -1,0 +1,232 @@
+/* ===== CHAPTER READER - Minimal & Clean ===== */
+.chapter-reader {
+  min-height: 100vh;
+  background-color: #000000;
+  padding-top: 65px;
+}
+
+/* Header */
+.reader-header {
+  position: fixed;
+  top: 65px;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background-color: rgba(15, 15, 15, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 1rem 0;
+}
+
+.reader-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.reader-back {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.625rem 1rem;
+  background-color: var(--bg-dark);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.reader-back:hover {
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+.reader-title {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  text-align: center;
+}
+
+.chapter-number {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.chapter-title-text {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.chapter-select {
+  padding: 0.625rem 1rem;
+  background-color: var(--bg-dark);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  max-width: 250px;
+}
+
+.chapter-select:hover,
+.chapter-select:focus {
+  border-color: var(--primary);
+  outline: none;
+}
+
+/* Pages */
+.reader-pages {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5rem 0 2rem;
+}
+
+.reader-page {
+  width: 100%;
+  max-width: 1000px;
+  margin-bottom: 0;
+}
+
+.reader-page img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Footer */
+.reader-footer {
+  position: sticky;
+  bottom: 0;
+  background-color: rgba(15, 15, 15, 0.95);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid var(--border);
+  padding: 1.5rem 0;
+  z-index: 100;
+}
+
+.reader-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.reader-controls .btn {
+  min-width: 180px;
+}
+
+.reader-controls .btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.next-chapter-info {
+  text-align: center;
+  padding: 1rem;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.next-chapter-info span {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.next-chapter-info strong {
+  color: var(--primary);
+  font-size: 0.95rem;
+}
+
+/* Loading & Error */
+.reader-loading,
+.reader-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: var(--bg-dark);
+  gap: 1rem;
+}
+
+.reader-loading .spinner {
+  width: 48px;
+  height: 48px;
+  border: 3px solid var(--border);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.reader-error h2 {
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .chapter-reader {
+    padding-top: 60px;
+  }
+
+  .reader-header {
+    top: 60px;
+    padding: 0.75rem 0;
+  }
+
+  .reader-nav {
+    flex-wrap: wrap;
+  }
+
+  .reader-back {
+    order: 1;
+    flex: 1;
+  }
+
+  .chapter-select {
+    order: 2;
+    flex: 1;
+  }
+
+  .reader-title {
+    order: 3;
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  .reader-pages {
+    padding: 4rem 0 2rem;
+  }
+
+  .reader-controls {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .reader-controls .btn {
+    width: 100%;
+    min-width: auto;
+  }
+}
