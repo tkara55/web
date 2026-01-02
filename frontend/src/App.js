@@ -5,6 +5,8 @@ import Footer from './components/layout/Footer';
 import Home from './pages/Home';
 import MangaDetail from './components/manga/MangaDetail';
 import ChapterReader from './pages/ChapterReader';
+import News from './pages/News';
+import NewsDetail from './pages/NewsDetail';
 import SiteMap from './pages/SiteMap';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
@@ -14,6 +16,8 @@ import AdminMangaList from './pages/Admin/AdminMangaList';
 import AdminMangaForm from './pages/Admin/AdminMangaForm';
 import AdminChapterList from './pages/Admin/AdminChapterList';
 import AdminChapterForm from './pages/Admin/AdminChapterForm';
+import AdminNewsList from './pages/Admin/AdminNewsList';
+import AdminNewsForm from './pages/Admin/AdminNewsForm';
 import './App.css';
 
 function App() {
@@ -51,6 +55,27 @@ function App() {
             </>
           } />
 
+          {/* News Routes */}
+          <Route path="/news" element={
+            <>
+              <Navbar />
+              <main className="main-content">
+                <News />
+              </main>
+              <Footer />
+            </>
+          } />
+
+          <Route path="/news/:slug" element={
+            <>
+              <Navbar />
+              <main className="main-content">
+                <NewsDetail />
+              </main>
+              <Footer />
+            </>
+          } />
+
           <Route path="/sitemap" element={
             <>
               <Navbar />
@@ -74,12 +99,10 @@ function App() {
             <Route path="manga/:slug/chapters" element={<AdminChapterList />} />
             <Route path="manga/:slug/chapters/create" element={<AdminChapterForm />} />
             <Route path="manga/:slug/chapters/:chapterSlug/edit" element={<AdminChapterForm />} />
+            <Route path="news" element={<AdminNewsList />} />
+            <Route path="news/create" element={<AdminNewsForm />} />
+            <Route path="news/:slug/edit" element={<AdminNewsForm />} />
           </Route>
-          
-          {/* Diğer route'lar sonra eklenecek */}
-          {/* <Route path="/manga/:slug/chapters/:chapterSlug" element={<ChapterReader />} />
-          <Route path="/news" element={<News />} />
-          <Route path="/gallery" element={<Gallery />} /> */}
         </Routes>
       </div>
     </Router>

@@ -102,6 +102,21 @@
   padding-left: 4px;
 }
 
+/* ===== Footer Disclaimer (EKLENDİ) ===== */
+.footer-disclaimer {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.footer-disclaimer p {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  max-width: 900px;
+  margin: 0 auto;
+  opacity: 0.8;
+}
+
 /* Footer Bottom */
 .footer-bottom {
   padding-top: 2rem;
@@ -131,9 +146,19 @@
 }
 
 @keyframes heartbeat {
-  0%, 100% { transform: scale(1); }
-  25% { transform: scale(1.1); }
-  50% { transform: scale(1); }
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  25% {
+    transform: scale(1.1);
+  }
+
+  50% {
+    transform: scale(1);
+  }
 }
 
 /* ===== RESPONSIVE ===== */
@@ -167,5 +192,10 @@
   .footer-bottom {
     flex-direction: column;
     text-align: center;
+  }
+
+  /* Disclaimer mobilde biraz daha küçük */
+  .footer-disclaimer p {
+    font-size: 0.7rem;
   }
 }

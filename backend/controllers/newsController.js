@@ -88,7 +88,6 @@ exports.createNews = async (req, res, next) => {
     next(error);
   }
 };
-
 // @desc    Haber güncelle
 // @route   PUT /api/news/:slug
 // @access  Private (Moderator/Admin)

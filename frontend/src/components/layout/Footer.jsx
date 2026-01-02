@@ -19,29 +19,49 @@ const Footer = () => {
             <p className="footer-description">
               En sevdiğiniz mangaları okuyun ve yeni seriler keşfedin.
             </p>
+            
+            {/* Social */}
+            <div className="footer-social">
+              <a href="https://github.com" target="_blank" rel="noopener noreferrer">
+                <FaGithub />
+              </a>
+              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+                <FaTwitter />
+              </a>
+              <a href="https://discord.com" target="_blank" rel="noopener noreferrer">
+                <FaDiscord />
+              </a>
+            </div>
           </div>
 
-          {/* Links */}
-          <div className="footer-links-wrapper">
-            <Link to="/">Ana Sayfa</Link>
-            <Link to="/">Serilerimiz</Link>
-            <Link to="/news">Duyurular</Link>
-            <Link to="/gallery">Galeri</Link>
-            <Link to="/sitemap">Site Haritası</Link>
+          {/* Links Sections */}
+          <div className="footer-section">
+            <h3 className="footer-section-title">Keşfet</h3>
+            <div className="footer-links">
+              <Link to="/">Ana Sayfa</Link>
+              <Link to="/">Serilerimiz</Link>
+              <Link to="/news">Duyurular</Link>
+              <Link to="/gallery">Galeri</Link>
+            </div>
           </div>
 
-          {/* Social */}
-          <div className="footer-social">
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer">
-              <FaGithub />
-            </a>
-            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-              <FaTwitter />
-            </a>
-            <a href="https://discord.com" target="_blank" rel="noopener noreferrer">
-              <FaDiscord />
-            </a>
+          <div className="footer-section">
+            <h3 className="footer-section-title">Bilgi</h3>
+            <div className="footer-links">
+              <Link to="/sitemap">Site Haritası</Link>
+              <Link to="/about">Hakkımızda</Link>
+              <Link to="/contact">İletişim</Link>
+            </div>
           </div>
+        </div>
+
+        {/* Disclaimer */}
+        <div className="footer-disclaimer">
+          <p>
+            Bu web sitesindeki tüm çizgi romanlar yalnızca orijinal çizgi romanların önizlemeleridir, 
+            birçok dil hatası, karakter adı ve hikaye satırı olabilir. Orijinal versiyon için, 
+            şehrinizde mevcutsa lütfen çizgi romanı satın alın.
+          </p>
         </div>
 
         {/* Bottom */}
