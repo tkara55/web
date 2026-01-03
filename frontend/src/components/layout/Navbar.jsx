@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaBook, FaHome, FaNewspaper, FaImages, FaUser, FaSignOutAlt, FaCog, FaSearch } from 'react-icons/fa';
+import { FaBook, FaHome, FaNewspaper, FaUser, FaSignOutAlt, FaCog, FaSearch } from 'react-icons/fa';
 import { authAPI, mangaAPI } from '../../utils/api';
 import './Navbar.css';
 
@@ -98,12 +98,6 @@ const Navbar = () => {
             <Link to="/news" className="nav-link">
               <FaNewspaper />
               <span>Duyurular</span>
-            </Link>
-          </li>
-          <li>
-            <Link to="/gallery" className="nav-link">
-              <FaImages />
-              <span>Galeri</span>
             </Link>
           </li>
         </ul>

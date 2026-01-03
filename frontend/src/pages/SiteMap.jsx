@@ -4,9 +4,6 @@ import {
   FaHome, 
   FaBook, 
   FaNewspaper, 
-  FaImages, 
-  FaUser, 
-  FaInfoCircle,
   FaChevronRight 
 } from 'react-icons/fa';
 import { mangaAPI, newsAPI } from '../utils/api';
@@ -49,7 +46,7 @@ const SiteMap = () => {
       icon: <FaBook />,
       title: 'Manga',
       links: [
-        { to: '/', label: 'Tüm Mangalar' },
+        { to: '/manga', label: 'Tüm Mangalar' },
         ...manga.map(m => ({
           to: `/manga/${m.slug}`,
           label: m.title
@@ -58,35 +55,13 @@ const SiteMap = () => {
     },
     {
       icon: <FaNewspaper />,
-      title: 'Haberler',
+      title: 'Duyurular',
       links: [
-        { to: '/news', label: 'Tüm Haberler' },
+        { to: '/news', label: 'Tüm Duyurular' },
         ...news.map(n => ({
           to: `/news/${n.slug}`,
           label: n.title
         }))
-      ]
-    },
-    {
-      icon: <FaImages />,
-      title: 'Galeri',
-      links: [
-        { to: '/gallery', label: 'Resim Galerisi' }
-      ]
-    },
-    {
-      icon: <FaUser />,
-      title: 'Kullanıcı',
-      links: [
-        { to: '/login', label: 'Giriş Yap' },
-        { to: '/register', label: 'Kayıt Ol' }
-      ]
-    },
-    {
-      icon: <FaInfoCircle />,
-      title: 'Diğer',
-      links: [
-        { to: '/sitemap', label: 'Site Haritası' }
       ]
     }
   ];
@@ -129,7 +104,7 @@ const SiteMap = () => {
         )}
 
         <div className="sitemap-footer">
-          <p>Toplam {manga.length} manga, {news.length} haber bulunmaktadır.</p>
+          <p>Toplam {manga.length} manga, {news.length} duyuru bulunmaktadır.</p>
         </div>
       </div>
     </div>
