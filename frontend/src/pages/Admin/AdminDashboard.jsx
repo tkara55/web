@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FaBook, FaUsers, FaNewspaper, FaImages, FaEye, FaUserClock } from 'react-icons/fa';
+import { FaBook, FaUsers, FaNewspaper, FaEye, FaUserClock } from 'react-icons/fa';
 import { adminAPI, statsAPI } from '../../utils/api';
 import './AdminDashboard.css';
 
@@ -61,12 +61,6 @@ const AdminDashboard = () => {
       label: 'Haberler',
       value: stats?.stats?.news || 0,
       color: '#f59e0b'
-    },
-    {
-      icon: <FaImages />,
-      label: 'Galeri Resimleri',
-      value: stats?.stats?.gallery || 0,
-      color: '#10b981'
     },
     {
       icon: <FaEye />,

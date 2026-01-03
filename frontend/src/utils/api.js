@@ -70,18 +70,6 @@ export const newsAPI = {
   delete: (slug) => api.delete(`/news/${slug}`)
 };
 
-// Gallery API
-export const galleryAPI = {
-  getAll: (params) => api.get('/gallery', { params }),
-  getById: (id) => api.get(`/gallery/${id}`),
-  upload: (data) => api.post('/gallery', data, {
-    headers: { 'Content-Type': 'multipart/form-data' }
-  }),
-  update: (id, data) => api.put(`/gallery/${id}`, data),
-  delete: (id) => api.delete(`/gallery/${id}`),
-  toggleLike: (id) => api.post(`/gallery/${id}/like`)
-};
-
 // Stats API
 export const statsAPI = {
   getSiteStats: () => api.get('/stats')

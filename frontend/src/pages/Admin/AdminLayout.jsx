@@ -4,7 +4,6 @@ import {
   FaHome, 
   FaBook, 
   FaNewspaper, 
-  FaImages, 
   FaUsers, 
   FaChartLine,
   FaSignOutAlt 
@@ -31,7 +30,6 @@ const AdminLayout = () => {
     { path: '/admin', icon: <FaChartLine />, label: 'Dashboard', exact: true },
     { path: '/admin/manga', icon: <FaBook />, label: 'Manga Yönetimi' },
     { path: '/admin/news', icon: <FaNewspaper />, label: 'Haberler' },
-    { path: '/admin/gallery', icon: <FaImages />, label: 'Galeri' },
     { path: '/admin/users', icon: <FaUsers />, label: 'Kullanıcılar' }
   ];
 

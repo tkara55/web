@@ -29,7 +29,27 @@ const Home = () => {
         sort: 'popular', 
         limit: 5 
       });
-      setFeaturedManga(featuredResponse.data.data);
+      
+      // Her manga için bölüm sayısını al
+      const featuredWithChapters = await Promise.all(
+        featuredResponse.data.data.map(async (manga) => {
+          try {
+            const chaptersResponse = await mangaAPI.getChapters(manga.slug);
+            return {
+              ...manga,
+              chapterCount: chaptersResponse.data.count || 0
+            };
+          } catch (error) {
+            console.error(`Error fetching chapters for ${manga.slug}:`, error);
+            return {
+              ...manga,
+              chapterCount: 0
+            };
+          }
+        })
+      );
+      
+      setFeaturedManga(featuredWithChapters);
 
       // Tüm mangalar
       const allResponse = await mangaAPI.getAll({ 

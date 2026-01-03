@@ -53,7 +53,6 @@ app.use(trackVisitor);
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/manga', require('./routes/manga'));
 app.use('/api/news', require('./routes/news'));
-app.use('/api/gallery', require('./routes/gallery'));
 app.use('/api/stats', require('./routes/stats'));
 app.use('/api/admin', require('./routes/admin'));
 

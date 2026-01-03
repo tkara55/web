@@ -19,6 +19,7 @@ import AdminChapterList from './pages/Admin/AdminChapterList';
 import AdminChapterForm from './pages/Admin/AdminChapterForm';
 import AdminNewsList from './pages/Admin/AdminNewsList';
 import AdminNewsForm from './pages/Admin/AdminNewsForm';
+import AdminUsersList from './pages/Admin/AdminUsersList';
 import './App.css';
 
 function App() {
@@ -113,6 +114,7 @@ function App() {
             <Route path="news" element={<AdminNewsList />} />
             <Route path="news/create" element={<AdminNewsForm />} />
             <Route path="news/:slug/edit" element={<AdminNewsForm />} />
+            <Route path="users" element={<AdminUsersList />} />
           </Route>
         </Routes>
       </div>

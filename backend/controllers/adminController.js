@@ -2,7 +2,6 @@ const User = require('../models/User');
 const Manga = require('../models/Manga');
 const Chapter = require('../models/Chapter');
 const News = require('../models/News');
-const Gallery = require('../models/Gallery');
 const SiteStats = require('../models/SiteStats');
 
 // @desc    Dashboard istatistiklerini getir
@@ -15,7 +14,6 @@ exports.getDashboardStats = async (req, res, next) => {
             totalManga,
             totalChapters,
             totalNews,
-            totalGallery,
             siteStats,
             recentUsers,
             popularManga
@@ -24,7 +22,6 @@ exports.getDashboardStats = async (req, res, next) => {
             Manga.countDocuments(),
             Chapter.countDocuments(),
             News.countDocuments(),
-            Gallery.countDocuments(),
             SiteStats.findById('site-stats'),
             User.find().sort({ createdAt: -1 }).limit(5).select('username email role createdAt'),
             Manga.find().sort({ viewCount: -1 }).limit(5).select('title slug viewCount coverImage')
@@ -38,7 +35,6 @@ exports.getDashboardStats = async (req, res, next) => {
                     manga: totalManga,
                     chapters: totalChapters,
                     news: totalNews,
-                    gallery: totalGallery,
                     visitors: siteStats ? siteStats.totalVisitors : 0,
                     onlineUsers: siteStats ? siteStats.getOnlineCount() : 0
                 },
