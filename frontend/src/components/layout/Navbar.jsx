@@ -89,7 +89,7 @@ const Navbar = () => {
             </Link>
           </li>
           <li>
-            <Link to="/" className="nav-link">
+            <Link to="/manga" className="nav-link">
               <FaBook />
               <span>Serilerimiz</span>
             </Link>

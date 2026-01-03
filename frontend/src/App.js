@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import Home from './pages/Home';
+import MangaList from './pages/MangaList';
 import MangaDetail from './components/manga/MangaDetail';
 import ChapterReader from './pages/ChapterReader';
 import News from './pages/News';
@@ -31,6 +32,16 @@ function App() {
               <Navbar />
               <main className="main-content">
                 <Home />
+              </main>
+              <Footer />
+            </>
+          } />
+          
+          <Route path="/manga" element={
+            <>
+              <Navbar />
+              <main className="main-content">
+                <MangaList />
               </main>
               <Footer />
             </>
