@@ -6,8 +6,6 @@ import {
   FaList, 
   FaSearchPlus, 
   FaSearchMinus,
-  FaExpand,
-  FaCompress
 } from 'react-icons/fa';
 import { mangaAPI } from '../utils/api';
 import './ChapterReader.css';
@@ -22,11 +20,8 @@ const ChapterReader = () => {
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
   const [zoom, setZoom] = useState(100);
-  const [isFullscreen, setIsFullscreen] = useState(false);
-  const [showControls, setShowControls] = useState(true);
   
   const readerRef = useRef(null);
-  const controlsTimeoutRef = useRef(null);
 
   useEffect(() => {
     fetchData();
@@ -38,39 +33,12 @@ const ChapterReader = () => {
         handleNextPage();
       } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
         handlePrevPage();
-      } else if (e.key === 'Escape') {
-        exitFullscreen();
       }
     };
 
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, [currentPage, chapter]);
-
-  useEffect(() => {
-    // Mouse hareketi ile kontrolleri göster
-    const handleMouseMove = () => {
-      setShowControls(true);
-      
-      if (controlsTimeoutRef.current) {
-        clearTimeout(controlsTimeoutRef.current);
-      }
-      
-      controlsTimeoutRef.current = setTimeout(() => {
-        if (isFullscreen) {
-          setShowControls(false);
-        }
-      }, 3000);
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      if (controlsTimeoutRef.current) {
-        clearTimeout(controlsTimeoutRef.current);
-      }
-    };
-  }, [isFullscreen]);
 
   const fetchData = async () => {
     try {
@@ -137,22 +105,6 @@ const ChapterReader = () => {
     setZoom(100);
   };
 
-  const toggleFullscreen = () => {
-    if (!document.fullscreenElement) {
-      readerRef.current?.requestFullscreen();
-      setIsFullscreen(true);
-    } else {
-      document.exitFullscreen();
-      setIsFullscreen(false);
-    }
-  };
-
-  const exitFullscreen = () => {
-    if (document.fullscreenElement) {
-      document.exitFullscreen();
-      setIsFullscreen(false);
-    }
-  };
 
   if (loading) {
     return (
@@ -178,11 +130,11 @@ const ChapterReader = () => {
 
   return (
     <div 
-      className={`chapter-reader ${isFullscreen ? 'fullscreen' : ''}`}
+      className="chapter-reader"
       ref={readerRef}
     >
       {/* Header */}
-      <div className={`reader-header ${showControls ? 'visible' : ''}`}>
+      <div className="reader-header">
         <div className="container">
           <div className="reader-nav">
             <Link to={`/manga/${slug}`} className="reader-back">
@@ -217,49 +169,79 @@ const ChapterReader = () => {
 
       {/* Page Display */}
       <div className="reader-page-container">
-        {chapter.pages?.map((page, index) => (
-          <div 
-            key={index}
-            className={`reader-page ${index === currentPage ? 'active' : ''}`}
-            style={{
-              display: index === currentPage ? 'flex' : 'none'
-            }}
+        {/* Zoom Controls - Sticky */}
+        <div className="zoom-controls">
+          <button 
+            onClick={handleZoomOut}
+            className="control-btn"
+            disabled={zoom <= 50}
+            title="Uzaklaştır"
           >
-            <img 
-              src={`http://localhost:5000${page.imagePath}`}
-              alt={`Sayfa ${page.pageNumber}`}
+            <FaSearchMinus />
+          </button>
+          <button 
+            onClick={handleResetZoom}
+            className="control-btn zoom-display"
+            title="Sıfırla"
+          >
+            {zoom}%
+          </button>
+          <button 
+            onClick={handleZoomIn}
+            className="control-btn"
+            disabled={zoom >= 200}
+            title="Yakınlaştır"
+          >
+            <FaSearchPlus />
+          </button>
+        </div>
+
+        {/* Page Navigation Arrows */}
+        {currentPage > 0 && (
+          <button 
+            className="page-arrow page-arrow-left"
+            onClick={handlePrevPage}
+          >
+            <FaArrowLeft />
+          </button>
+        )}
+        
+        {currentPage < chapter.pages.length - 1 && (
+          <button 
+            className="page-arrow page-arrow-right"
+            onClick={handleNextPage}
+          >
+            <FaArrowRight />
+          </button>
+        )}
+
+        {/* Pages */}
+        <div className="reader-page-wrapper">
+          {chapter.pages?.map((page, index) => (
+            <div 
+              key={index}
+              className={`reader-page ${index === currentPage ? 'active' : ''}`}
               style={{
-                transform: `scale(${zoom / 100})`,
-                maxWidth: '100%',
-                maxHeight: '100%',
-                objectFit: 'contain'
+                display: index === currentPage ? 'flex' : 'none'
               }}
-            />
-          </div>
-        ))}
+            >
+              <img 
+                src={`http://localhost:5000${page.imagePath}`}
+                alt={`Sayfa ${page.pageNumber}`}
+                style={{
+                  transform: `scale(${zoom / 100})`,
+                  maxWidth: '100%',
+                  maxHeight: '100%',
+                  objectFit: 'contain'
+                }}
+              />
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* Page Navigation Arrows */}
-      {currentPage > 0 && (
-        <button 
-          className="page-arrow page-arrow-left"
-          onClick={handlePrevPage}
-        >
-          <FaArrowLeft />
-        </button>
-      )}
-      
-      {currentPage < chapter.pages.length - 1 && (
-        <button 
-          className="page-arrow page-arrow-right"
-          onClick={handleNextPage}
-        >
-          <FaArrowRight />
-        </button>
-      )}
-
       {/* Bottom Controls */}
-      <div className={`reader-controls ${showControls ? 'visible' : ''}`}>
+      <div className="reader-controls">
         <div className="container">
           {/* Progress Bar */}
           <div className="reader-progress">
@@ -278,33 +260,6 @@ const ChapterReader = () => {
 
           {/* Control Buttons */}
           <div className="reader-buttons">
-            {/* Zoom Controls */}
-            <div className="zoom-controls">
-              <button 
-                onClick={handleZoomOut}
-                className="control-btn"
-                disabled={zoom <= 50}
-                title="Uzaklaştır"
-              >
-                <FaSearchMinus />
-              </button>
-              <button 
-                onClick={handleResetZoom}
-                className="control-btn zoom-display"
-                title="Sıfırla"
-              >
-                {zoom}%
-              </button>
-              <button 
-                onClick={handleZoomIn}
-                className="control-btn"
-                disabled={zoom >= 200}
-                title="Yakınlaştır"
-              >
-                <FaSearchPlus />
-              </button>
-            </div>
-
             {/* Navigation */}
             <div className="nav-controls">
               <button
@@ -339,15 +294,6 @@ const ChapterReader = () => {
                 {currentPage === chapter.pages.length - 1 ? 'Sonraki Bölüm' : 'Sonraki Sayfa'} <FaArrowRight />
               </button>
             </div>
-
-            {/* Fullscreen */}
-            <button 
-              onClick={toggleFullscreen}
-              className="control-btn fullscreen-btn"
-              title={isFullscreen ? 'Tam Ekrandan Çık' : 'Tam Ekran'}
-            >
-              {isFullscreen ? <FaCompress /> : <FaExpand />}
-            </button>
           </div>
         </div>
       </div>
