@@ -23,7 +23,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!formData.email || !formData.password) {
       setError('Lütfen tüm alanları doldurun');
       return;
@@ -32,12 +32,10 @@ const Login = () => {
     try {
       setLoading(true);
       const response = await authAPI.login(formData);
-      
-      // Token ve user bilgisini kaydet
+
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('user', JSON.stringify(response.data.user));
-      
-      // Yönlendir
+
       if (response.data.user.role === 'admin' || response.data.user.role === 'moderator') {
         navigate('/admin');
       } else {
@@ -45,7 +43,13 @@ const Login = () => {
       }
     } catch (error) {
       console.error('Login error:', error);
-      setError(error.response?.data?.message || 'Giriş başarısız. Bilgilerinizi kontrol edin.');
+
+      // Hesap devre dışı mesajını özel olarak göster
+      if (error.response?.status === 403) {
+        setError(error.response?.data?.message || 'Hesabınız devre dışı bırakılmış.');
+      } else {
+        setError(error.response?.data?.message || 'Giriş başarısız. Bilgilerinizi kontrol edin.');
+      }
     } finally {
       setLoading(false);
     }
@@ -96,8 +100,8 @@ const Login = () => {
             />
           </div>
 
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             className="btn btn-primary btn-lg btn-block"
             disabled={loading}
           >

@@ -90,26 +90,65 @@
 .admin-nav-item svg {
   font-size: 1.125rem;
   min-width: 1.125rem;
+  flex-shrink: 0;
+}
+
+.admin-nav-item span {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .admin-nav-divider {
   height: 1px;
   background-color: var(--border);
-  margin: 0.5rem 1rem;
+  margin: 0.5rem 0;
 }
 
+/* Siteye Dön Butonu - Özel Stil */
 .admin-nav-site {
   background-color: var(--bg-dark);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   margin: 0 1rem 0.5rem;
   padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: var(--transition);
+  cursor: pointer;
+  width: calc(100% - 2rem);
 }
 
 .admin-nav-site:hover {
+  background-color: var(--bg-hover);
   border-color: var(--primary);
+  color: var(--primary);
+  transform: translateY(-1px);
 }
 
+.admin-nav-site::before {
+  display: none;
+}
+
+.admin-nav-site svg {
+  font-size: 1.125rem;
+  min-width: 1.125rem;
+  flex-shrink: 0;
+}
+
+.admin-nav-site span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Çıkış Yap Butonu */
 .admin-nav-logout {
   margin-top: auto;
   color: #ef4444;
@@ -118,6 +157,10 @@
 .admin-nav-logout:hover {
   background-color: rgba(239, 68, 68, 0.1);
   color: #dc2626;
+}
+
+.admin-nav-logout:hover::before {
+  background-color: #ef4444;
 }
 
 /* Main Content */
@@ -161,10 +204,42 @@
   .admin-main {
     margin-left: 0;
   }
+
+  .admin-nav-site {
+    width: calc(100% - 2rem);
+  }
 }
 
 @media (max-width: 768px) {
   .admin-main {
     padding: 1.5rem;
+  }
+
+  .admin-sidebar {
+    width: 240px;
+  }
+
+  .admin-nav-site {
+    font-size: 0.9rem;
+    padding: 0.625rem 0.875rem;
+  }
+
+  .admin-nav-item {
+    font-size: 0.9rem;
+    padding: 0.75rem 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-sidebar {
+    width: 220px;
+  }
+
+  .admin-sidebar-header {
+    padding: 1.5rem 1rem;
+  }
+
+  .admin-sidebar-header h2 {
+    font-size: 1.125rem;
   }
 }

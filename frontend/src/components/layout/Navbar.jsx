@@ -15,13 +15,11 @@ const Navbar = () => {
   const [searchLoading, setSearchLoading] = useState(false);
 
   useEffect(() => {
-    // LocalStorage'dan kullanıcıyı al
     const userData = localStorage.getItem('user');
     if (userData) {
       setUser(JSON.parse(userData));
     }
 
-    // Scroll event
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
@@ -32,14 +30,25 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     try {
-      await authAPI.logout();
+      // Önce local storage'ı temizle
       localStorage.removeItem('token');
       localStorage.removeItem('user');
       setUser(null);
       setShowUserMenu(false);
+      
+      // Sonra backend'e logout isteği gönder (başarısız olsa bile sorun değil)
+      try {
+        await authAPI.logout();
+      } catch (error) {
+        // Logout hatası olsa bile kullanıcıyı çıkar
+        console.log('Logout request failed, but user logged out locally');
+      }
+      
       navigate('/');
     } catch (error) {
       console.error('Logout error:', error);
+      // Hata olsa bile kullanıcıyı ana sayfaya yönlendir
+      navigate('/');
     }
   };
 
@@ -74,13 +83,11 @@ const Navbar = () => {
   return (
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <div className="navbar-content container">
-        {/* Logo */}
         <Link to="/" className="navbar-logo">
           <FaBook className="logo-icon" />
           <span>MangaSite</span>
         </Link>
 
-        {/* Navigation Links */}
         <ul className="navbar-links">
           <li>
             <Link to="/" className="nav-link">
@@ -102,7 +109,6 @@ const Navbar = () => {
           </li>
         </ul>
 
-        {/* Search Bar */}
         <div className="navbar-search">
           <div className="search-input-wrapper">
             <FaSearch className="search-icon" />
@@ -116,7 +122,6 @@ const Navbar = () => {
             />
           </div>
 
-          {/* Search Results Dropdown */}
           {showSearchResults && (
             <>
               <div 
@@ -154,10 +159,8 @@ const Navbar = () => {
           )}
         </div>
 
-        {/* Auth Section */}
         <div className="navbar-auth">
           {user ? (
-            // User Menu
             <div className="user-menu">
               <button 
                 className="user-profile"
@@ -167,7 +170,6 @@ const Navbar = () => {
                 <span>{user.username}</span>
               </button>
 
-              {/* Dropdown Menu */}
               {showUserMenu && (
                 <>
                   <div 
@@ -209,7 +211,6 @@ const Navbar = () => {
               )}
             </div>
           ) : (
-            // Auth Buttons
             <div className="auth-buttons">
               <Link to="/login" className="btn btn-secondary">
                 Giriş Yap

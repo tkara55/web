@@ -1,8 +1,14 @@
-/* ===== CHAPTER READER - Minimal & Clean ===== */
+/* ===== CHAPTER READER - Modern & Clean ===== */
 .chapter-reader {
   min-height: 100vh;
   background-color: #000000;
   padding-top: 65px;
+  position: relative;
+  overflow: hidden;
+}
+
+.chapter-reader.fullscreen {
+  padding-top: 0;
 }
 
 /* Header */
@@ -16,6 +22,16 @@
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
   padding: 1rem 0;
+  transform: translateY(0);
+  transition: transform 0.3s ease;
+}
+
+.fullscreen .reader-header {
+  top: 0;
+}
+
+.reader-header:not(.visible) {
+  transform: translateY(-100%);
 }
 
 .reader-nav {
@@ -84,75 +100,204 @@
   outline: none;
 }
 
-/* Pages */
-.reader-pages {
+/* Page Display */
+.reader-page-container {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  padding: 5rem 0 2rem;
+  justify-content: center;
+  min-height: calc(100vh - 65px - 120px);
+  padding: 2rem 1rem;
+}
+
+.fullscreen .reader-page-container {
+  min-height: calc(100vh - 120px);
+  padding: 1rem;
 }
 
 .reader-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
-  max-width: 1000px;
-  margin-bottom: 0;
+  height: 100%;
+  transition: opacity 0.3s ease;
 }
 
 .reader-page img {
-  width: 100%;
+  max-width: 100%;
+  max-height: calc(100vh - 65px - 200px);
   height: auto;
-  display: block;
+  width: auto;
+  transition: transform 0.3s ease;
+  user-select: none;
+  -webkit-user-drag: none;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
 }
 
-/* Footer */
-.reader-footer {
-  position: sticky;
+.fullscreen .reader-page img {
+  max-height: calc(100vh - 200px);
+}
+
+/* Page Navigation Arrows */
+.page-arrow {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 50;
+  width: 60px;
+  height: 60px;
+  background-color: rgba(15, 15, 15, 0.8);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+  backdrop-filter: blur(8px);
+}
+
+.page-arrow:hover {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.page-arrow svg {
+  font-size: 1.5rem;
+}
+
+.page-arrow-left {
+  left: 2rem;
+}
+
+.page-arrow-right {
+  right: 2rem;
+}
+
+/* Bottom Controls */
+.reader-controls {
+  position: fixed;
   bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
   background-color: rgba(15, 15, 15, 0.95);
   backdrop-filter: blur(12px);
   border-top: 1px solid var(--border);
   padding: 1.5rem 0;
-  z-index: 100;
+  transform: translateY(0);
+  transition: transform 0.3s ease;
 }
 
-.reader-controls {
+.reader-controls:not(.visible) {
+  transform: translateY(100%);
+}
+
+/* Progress */
+.reader-progress {
+  margin-bottom: 1.5rem;
+}
+
+.progress-info {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.progress-info span {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 4px;
+  background-color: var(--bg-dark);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: var(--primary);
+  transition: width 0.3s ease;
+}
+
+/* Control Buttons */
+.reader-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.zoom-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--bg-dark);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.25rem;
+}
+
+.control-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
+  min-width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition);
+  border-radius: var(--radius-sm);
+  padding: 0 0.5rem;
 }
 
-.reader-controls .btn {
-  min-width: 180px;
+.control-btn:hover:not(:disabled) {
+  background-color: var(--bg-hover);
+  color: var(--primary);
 }
 
-.reader-controls .btn:disabled {
+.control-btn:disabled {
   opacity: 0.3;
   cursor: not-allowed;
 }
 
-.next-chapter-info {
-  text-align: center;
-  padding: 1rem;
-  background-color: var(--bg-card);
+.zoom-display {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  min-width: 60px;
+}
+
+.fullscreen-btn {
+  background-color: var(--bg-dark);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
+}
+
+.fullscreen-btn:hover {
+  border-color: var(--primary);
+}
+
+/* Navigation Controls */
+.nav-controls {
   display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+  justify-content: center;
 }
 
-.next-chapter-info span {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.next-chapter-info strong {
-  color: var(--primary);
-  font-size: 0.95rem;
+.nav-controls .btn {
+  white-space: nowrap;
 }
 
 /* Loading & Error */
@@ -186,6 +331,21 @@
 }
 
 /* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .page-arrow {
+    width: 50px;
+    height: 50px;
+  }
+
+  .page-arrow-left {
+    left: 1rem;
+  }
+
+  .page-arrow-right {
+    right: 1rem;
+  }
+}
+
 @media (max-width: 768px) {
   .chapter-reader {
     padding-top: 60px;
@@ -194,6 +354,10 @@
   .reader-header {
     top: 60px;
     padding: 0.75rem 0;
+  }
+
+  .fullscreen .reader-header {
+    top: 0;
   }
 
   .reader-nav {
@@ -216,17 +380,55 @@
     margin-top: 0.5rem;
   }
 
-  .reader-pages {
-    padding: 4rem 0 2rem;
+  .page-arrow {
+    width: 44px;
+    height: 44px;
   }
 
-  .reader-controls {
+  .page-arrow svg {
+    font-size: 1.25rem;
+  }
+
+  .reader-buttons {
     flex-direction: column;
+    gap: 1rem;
+  }
+
+  .zoom-controls,
+  .nav-controls {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .nav-controls {
+    flex-direction: column;
+  }
+
+  .nav-controls .btn {
     width: 100%;
   }
 
-  .reader-controls .btn {
+  .fullscreen-btn {
     width: 100%;
-    min-width: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-arrow {
+    width: 40px;
+    height: 40px;
+    left: 0.5rem;
+  }
+
+  .page-arrow-right {
+    right: 0.5rem;
+  }
+
+  .reader-page img {
+    max-height: calc(100vh - 60px - 250px);
+  }
+
+  .fullscreen .reader-page img {
+    max-height: calc(100vh - 250px);
   }
 }

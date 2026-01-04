@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import Home from './pages/Home';
@@ -27,7 +27,7 @@ function App() {
     <Router>
       <div className="App">
         <Routes>
-          {/* Public Routes with Navbar */}
+          {/* Ana Sayfa - hem / hem /home çalışsın */}
           <Route path="/" element={
             <>
               <Navbar />
@@ -38,6 +38,17 @@ function App() {
             </>
           } />
           
+          <Route path="/home" element={
+            <>
+              <Navbar />
+              <main className="main-content">
+                <Home />
+              </main>
+              <Footer />
+            </>
+          } />
+          
+          {/* Manga Routes */}
           <Route path="/manga" element={
             <>
               <Navbar />
@@ -88,6 +99,7 @@ function App() {
             </>
           } />
 
+          {/* Sitemap */}
           <Route path="/sitemap" element={
             <>
               <Navbar />
@@ -98,11 +110,11 @@ function App() {
             </>
           } />
 
-          {/* Auth Routes - No Navbar */}
+          {/* Auth Routes */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
 
-          {/* Admin Routes - No Navbar */}
+          {/* Admin Routes */}
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<AdminDashboard />} />
             <Route path="manga" element={<AdminMangaList />} />

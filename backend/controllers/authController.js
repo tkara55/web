@@ -8,7 +8,6 @@ exports.register = async (req, res) => {
     try {
         const { username, email, password } = req.body;
 
-        // Kullanıcı var mı kontrol et
         const userExists = await User.findOne({ $or: [{ email }, { username }] });
 
         if (userExists) {
@@ -18,14 +17,12 @@ exports.register = async (req, res) => {
             });
         }
 
-        // Kullanıcı oluştur
         const user = await User.create({
             username,
             email,
             password
         });
 
-        // Token ile yanıt gönder
         sendTokenResponse(user, 201, res);
     } catch (error) {
         console.error('Register error:', error);
@@ -43,7 +40,6 @@ exports.login = async (req, res) => {
     try {
         const { email, password } = req.body;
 
-        // Validasyon
         if (!email || !password) {
             return res.status(400).json({
                 success: false,
@@ -51,7 +47,6 @@ exports.login = async (req, res) => {
             });
         }
 
-        // Kullanıcıyı bul (şifre ile birlikte)
         const user = await User.findOne({ email }).select('+password');
 
         if (!user) {
@@ -61,7 +56,6 @@ exports.login = async (req, res) => {
             });
         }
 
-        // Şifre kontrolü
         const isMatch = await user.comparePassword(password);
 
         if (!isMatch) {
@@ -71,11 +65,17 @@ exports.login = async (req, res) => {
             });
         }
 
-        // Son giriş zamanını güncelle
+        // isActive kontrolü ekle
+        if (!user.isActive) {
+            return res.status(403).json({
+                success: false,
+                message: 'Hesabınız devre dışı bırakılmış. Lütfen yönetici ile iletişime geçin.'
+            });
+        }
+
         user.lastLogin = Date.now();
         await user.save({ validateBeforeSave: false });
 
-        // Token ile yanıt gönder
         sendTokenResponse(user, 200, res);
     } catch (error) {
         console.error('Login error:', error);
@@ -150,7 +150,6 @@ exports.updatePassword = async (req, res) => {
 
         const user = await User.findById(req.user.id).select('+password');
 
-        // Mevcut şifreyi kontrol et
         const isMatch = await user.comparePassword(currentPassword);
 
         if (!isMatch) {
@@ -160,7 +159,6 @@ exports.updatePassword = async (req, res) => {
             });
         }
 
-        // Yeni şifreyi kaydet
         user.password = newPassword;
         await user.save();
 

@@ -8,7 +8,6 @@ const mangaSchema = new mongoose.Schema({
         trim: true
     },
 
-    // Slugify - URL dostu başlık (Kriter)
     slug: {
         type: String,
         unique: true,
@@ -62,7 +61,6 @@ const mangaSchema = new mongoose.Schema({
         default: 0
     },
 
-    // Kim ekledi
     addedBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
@@ -79,7 +77,6 @@ const mangaSchema = new mongoose.Schema({
     toObject: { virtuals: true }
 });
 
-// Slug otomatik oluşturma (Slugify kriteri)
 mangaSchema.pre('save', function () {
     if (this.isModified('title')) {
         this.slug = slugify(this.title, {
@@ -90,7 +87,6 @@ mangaSchema.pre('save', function () {
     }
 });
 
-// Virtual - Bölüm sayısını döndür
 mangaSchema.virtual('chapterCount', {
     ref: 'Chapter',
     localField: '_id',
@@ -98,7 +94,6 @@ mangaSchema.virtual('chapterCount', {
     count: true
 });
 
-// Görüntülenme sayısını artır
 mangaSchema.methods.incrementViews = async function () {
     this.viewCount += 1;
     return await this.save();

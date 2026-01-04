@@ -14,6 +14,7 @@ const MangaDetail = () => {
   useEffect(() => {
     fetchMangaDetail();
     fetchChapters();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slug]);
 
   const fetchMangaDetail = async () => {

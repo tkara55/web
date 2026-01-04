@@ -2,15 +2,18 @@ import React from 'react';
 import './CategoryFilter.css';
 
 const categories = [
-  { id: 'all', name: 'Tüm Seriler', icon: '📚' },
-  { id: 'Aksiyon', name: 'Aksiyon', icon: '⚔️' },
-  { id: 'Aşın Güçlü', name: 'Aşırı Güçlü', icon: '💪' },
-  { id: 'Bilim Kurgu', name: 'Bilim Kurgu', icon: '🚀' },
-  { id: 'Büyü', name: 'Büyü', icon: '🔮' },
-  { id: 'Canavar', name: 'Canavar', icon: '👹' },
-  { id: 'Dahi Mc', name: 'Dahi Mc', icon: '🧠' },
-  { id: 'Dedektif', name: 'Dedektif', icon: '🔍' },
-  { id: 'Doğaüstü', name: 'Doğaüstü', icon: '👻' },
+  { id: 'all', name: 'Tüm Seriler',},
+  { id: 'Aksiyon', name: 'Aksiyon',},
+  { id: 'Macera', name: 'Macera',},
+  { id: 'Komedi', name: 'Komedi',},
+  { id: 'Drama', name: 'Drama',},
+  { id: 'Fantastik', name: 'Fantastik',},
+  { id: 'Korku', name: 'Korku',},
+  { id: 'Romantik', name: 'Romantik',},
+  { id: 'Bilim Kurgu', name: 'Bilim Kurgu',},
+  { id: 'Slice of Life', name: 'Slice of Life',},
+  { id: 'Spor', name: 'Spor',},
+  { id: 'Gerilim', name: 'Gerilim',}
 ];
 
 const CategoryFilter = ({ activeCategory, onCategoryChange }) => {

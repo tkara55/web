@@ -18,6 +18,7 @@ const Home = () => {
 
   useEffect(() => {
     filterMangaByCategory();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeCategory, allManga]);
 
   const fetchManga = async () => {
